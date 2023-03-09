@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Works log</h2>
+{% for action in data %}
+<table>
+    <thead>
+    <h3>Action # {{loop.index}}</h3>
+    </thead>
+    <tbody>
+    <tr style="background:LightGray">
+        <th>
+            <div class="frow">Title of activity</div>
+        </th>
+        <th>
+            <div class="row">Team leader</div>
+        </th>
+        <th>
+            <div class="row">Duration</div>
+        </th>
+        <th>
+            <div class="row">List of collaborators</div>
+        </th>
+        <th>
+            <div class="row">Is finished</div>
+        </th>
+    </tr>
+    <tr style="background:Lavender">
+        {% for column in action %}
+        {% if loop.first %}
+        <td>
+            <div class="frow">{{column}}</div>
+        </td>
+        {% else %}
+        <td>
+            <div class="row">{{column}}</div>
+        </td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+{% endfor %}
+
+{% endblock %}
