@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if list == 'ul' %}
+        <ul>
+            {% for prof in data %}
+                <li>{{prof}}</li>
+            {% endfor %}
+        </ul>
+    {% elif list == 'ol' %}
+        <ol>
+            {% for prof in data %}
+                <li>{{prof}}</li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endblock %}

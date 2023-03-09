@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for field in data %}
+        <div class="field">
+            <h4>{{field_names[loop.index0]}} {{data[field]}}</h4>
+        </div>
+    {% endfor %}
+{% endblock %}

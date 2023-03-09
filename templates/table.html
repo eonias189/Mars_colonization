@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <table>
+        <thead>
+        <h2>Оформление каюты</h2>
+        </thead>
+        <tbody>
+
+        <tr style="background:Grey">
+            <th>Цвет стен</th>
+            <th>Эмблема</th>
+        </tr>
+        <tr>
+            <td><img src={{url_color}} alt="здесь долна была быть картинка"></td>
+            <td><img src={{url_emblem}} alt="здесь долна была быть картинка"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
