@@ -6,13 +6,11 @@ from data.jobs import Jobs
 db_session.global_init("db/mars_explorer.db")
 session = db_session.create_session()
 
-job = Jobs()
-job.team_leader = 1
-job.job = 'deployment of residential modules 1 and 2'
-job.work_size = '15'
-job.collaborators = '2, 3'
-job.start_date = dt.datetime.now()
-job.is_finished = False
-session.add(job)
+# global_init(input())
+# session = create_session()
 
+jobs = session.query(Jobs).all()
+users = session.query(User).filter(User.address == 'module_1', User.age < 21)
+for user in users:
+    user.address = 'module_3'
 session.commit()
