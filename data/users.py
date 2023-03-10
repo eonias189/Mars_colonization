@@ -19,3 +19,9 @@ class User(SqlAlchemyBase):
 
     def __repr__(self):
         return f'<Colonist> {self.id} {self.surname} {self.name}'
+
+    def set_password(self, password):
+        self.password = password
+
+    def check_password(self, password):
+        return self.password == password
