@@ -10,7 +10,10 @@ session = db_session.create_session()
 # session = create_session()
 
 jobs = session.query(Jobs).all()
-users = session.query(User).filter(User.address == 'module_1', User.age < 21)
-for user in users:
-    user.address = 'module_3'
+team_leads = sorted([(len(job.collaborators.split(', ')), job.team_leader) for job in jobs], key=lambda x: x[0])[::-1]
+n_max = team_leads[0][0]
+users = [i[1] for i in team_leads if i[0] == n_max]
+users = session.query(User).filter(User.id.in_(users))
+for i in users:
+    print(f'{i.name} {i.surname}')
 session.commit()

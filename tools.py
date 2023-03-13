@@ -25,6 +25,10 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class RegisterSuccess(FlaskForm):
+    button = SubmitField('Вернуться на главную страницу')
+
+
 def hash_password(password):
     hash_dict = {'q': 'ю', 'ю': 'q', 'w': 'б', 'б': 'w', 'e': 'ь', 'ь': 'e',
                  'r': 'т', 'т': 'r', 't': 'и', 'и': 't', 'y': 'м', 'м': 'y',
