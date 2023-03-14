@@ -29,6 +29,13 @@ class RegisterSuccess(FlaskForm):
     button = SubmitField('Вернуться на главную страницу')
 
 
+class LoginForm2(FlaskForm):
+    email = StringField('Почта/логин', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('войти')
+
+
 def hash_password(password):
     hash_dict = {'q': 'ю', 'ю': 'q', 'w': 'б', 'б': 'w', 'e': 'ь', 'ь': 'e',
                  'r': 'т', 'т': 'r', 't': 'и', 'и': 't', 'y': 'м', 'м': 'y',
