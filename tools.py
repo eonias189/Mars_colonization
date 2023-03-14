@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+    DateField
 from wtforms.validators import DataRequired
 
 
@@ -34,6 +35,17 @@ class LoginForm2(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('войти')
+
+
+class AddJob(FlaskForm):
+    team_leader = StringField('Id руководителя', validators=[DataRequired()])
+    job = StringField('Опимание', validators=[DataRequired()])
+    work_size = StringField('Объём работы в часах', validators=[DataRequired()])
+    collaborators = StringField('Id участников', validators=[DataRequired()])
+    start_date = DateField('Дата начала')
+    end_date = DateField('Дата окончания')
+    is_finished = BooleanField('Закончена')
+    submit = SubmitField('создать')
 
 
 def hash_password(password):

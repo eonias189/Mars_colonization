@@ -39,7 +39,8 @@ def main():
              f'{job.work_size} hours', job.collaborators,
              'Is finished' if job.is_finished else 'Is not finished'] for job in
             session.query(Jobs).all()]
-    return render_template('works_log.html', url_style=url_style, data=data)
+    return render_template('works_log.html', url_style=url_style, data=data,
+                           title='Главная страница')
 
 
 @app.route('/login', methods=['POST', 'GET'])
