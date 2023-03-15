@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<p>
+    <a class="btn btn-primary" href="/addjob" style="font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #66CDAA;
+border-radius: 10px;">Добавить работу</a>
+</p>
 <h2>Works log</h2>
 {% for action in data %}
 <table>

@@ -6,15 +6,47 @@
     <title>{{title}}</title>
 </head>
 <body>
-{% if current_user.is_authenticated %}
-<a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
-{% else %}
+
 <p>
-    <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-    <a class="btn btn-success" href="/login">Войти</a>
+    <a style="
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;">
+        Миссия колонизация Марса
+    </a>
+    {% if current_user.is_authenticated %}
+    <a class="navbar-brand" href="/logout" style="
+font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #66CDAA;
+border-radius: 10px;">
+        {{ current_user.name }}</a>
+    {% else %}
+    <a class="btn btn-primary" href="/register" style="
+font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #66CDAA;
+border-radius: 10px;">
+        Зарегистрироваться</a>
+    <a class="btn btn-primary" href="/login" style="
+font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #66CDAA;
+border-radius: 10px;">
+        Войти</a>
+    {% endif %}
+    <a class="btn btn-primary" href="/" style="font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #66CDAA;
+border-radius: 10px;">на главную</a>
 </p>
-{% endif %}
-<h1>Миссия колонизация Марса</h1>
 <div class="begining">
     <h4>И на Марсе будут яблони цвести!</h4>
 </div>

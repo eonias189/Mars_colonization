@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, current_user, login_required, 
 from data import db_session
 from data.users import User
 from data.jobs import Jobs
-from tools import RegisterForm, hash_password, RegisterSuccess, LoginForm2
+from tools import RegisterForm, hash_password, RegisterSuccess, LoginForm2, AddJob
 
 db_session.global_init("db/mars_explorer.db")
 session = db_session.create_session()
@@ -46,7 +46,7 @@ def main():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm2()
-    url_style = url_for('static', filename='css/register.css')
+    url_style = url_for('static', filename='css/style_form.css')
     params = {'title': 'авторизация', 'url_style': url_style, 'form': form,
               'user': current_user}
     if form.validate_on_submit():
@@ -66,7 +66,7 @@ def login():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegisterForm()
-    url_style = url_for('static', filename='css/register.css')
+    url_style = url_for('static', filename='css/style_form.css')
     if form.validate_on_submit():
         if form.password.data != form.rep_password.data:
             return render_template('register.html', title='Регистрация',
@@ -95,11 +95,32 @@ def register():
 @app.route('/register/success', methods=['GET', 'POST'])
 def register_success():
     ans = RegisterSuccess()
-    url_style = url_for('static', filename='css/register.css')
+    url_style = url_for('static', filename='css/style_form.css')
     if ans.validate_on_submit():
         return redirect('/')
     return render_template('register_success.html', form=ans,
                            title='регистрация успешна', url_style=url_style)
+
+
+@app.route('/addjob', methods=['POST', 'GET'])
+def add_job():
+    url_style = url_for('static', filename='css/style_form.css')
+    form = AddJob()
+    params = {'title': 'Добавление работы', 'url_style': url_style, 'form': form}
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        job = Jobs(job=form.job.data, team_leader=form.team_leader.data, work_size=form.work_size.data,
+                   collaborators=form.collaborators.data, start_date=dt.datetime.now(),
+                   is_finished=form.is_finished.data)
+        user = db_sess.query(User).get(form.team_leader.data)
+        if not user:
+            return render_template('add_job.html', **params,
+                                   message=f'пользователь с id {form.team_leader.data} не найден')
+        job.user = user
+        db_sess.add(job)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('add_job.html', **params)
 
 
 if __name__ == '__main__':
