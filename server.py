@@ -41,6 +41,11 @@ def not_found(error):
     return make_response(flask.jsonify({'error': 'Not found'}), 404)
 
 
+@app.errorhandler(405)
+def not_found(error):
+    return make_response(flask.jsonify({'error': '405'}), 405)
+
+
 @app.errorhandler(400)
 def bad_request(_):
     return make_response(flask.jsonify({'error': 'Bad Request'}), 400)
