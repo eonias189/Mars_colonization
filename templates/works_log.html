@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h2>Works log</h2>
+{% if current_user.is_authenticated %}
 <p>
     <a class="btn btn-primary" href="/addjob" style="font-size: 16px;
 border: 1px solid gray;
 padding: 3px;
-background-color: #66CDAA;
-border-radius: 10px;">Добавить работу</a>
+background-color: #32CD32;
+border-radius: 10px;
+margin-left: 15%;">Добавить работу</a>
 </p>
-<h2>Works log</h2>
+{% endif %}
 {% for action in data %}
 <table>
     <thead>
@@ -33,7 +36,7 @@ border-radius: 10px;">Добавить работу</a>
         </th>
     </tr>
     <tr style="background:Lavender">
-        {% for column in action %}
+        {% for column in action[2:] %}
         {% if loop.first %}
         <td>
             <div class="frow">{{column}}</div>
@@ -47,6 +50,24 @@ border-radius: 10px;">Добавить работу</a>
     </tr>
     </tbody>
 </table>
+{% if current_user.is_authenticated and current_user.id in [1, action[1]] %}
+<p style="margin-left: 15%">
+    <a class="btn btn-primary" href="/edit_job/{{action[0]}}" style="
+font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #DAA520;
+border-radius: 10px;">
+        Редактировать</a>
+    <a class="btn btn-primary" href="/delete_job/{{action[0]}}" style="
+font-size: 16px;
+border: 1px solid gray;
+padding: 3px;
+background-color: #B22222;
+border-radius: 10px;">
+        Удалить</a>
+</p>
+{% endif %}
 {% endfor %}
 
 {% endblock %}

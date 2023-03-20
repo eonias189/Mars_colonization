@@ -38,12 +38,23 @@ class LoginForm2(FlaskForm):
 
 
 class AddJob(FlaskForm):
-    team_leader = StringField('Id руководителя', validators=[DataRequired()])
+    team_leader = StringField('Id руководителя', validators=[DataRequired()], )
     job = StringField('Опиcание', validators=[DataRequired()])
     work_size = StringField('Объём работы в часах', validators=[DataRequired()])
     collaborators = StringField('Id участников', validators=[DataRequired()])
     is_finished = BooleanField('Закончена')
     submit = SubmitField('создать')
+
+
+class EditJob(FlaskForm):
+    team_leader = StringField('Id руководителя', validators=[DataRequired()])
+    job = StringField('Опиcание', validators=[DataRequired()])
+    work_size = StringField('Объём работы в часах', validators=[DataRequired()])
+    collaborators = StringField('Id участников', validators=[DataRequired()])
+    start_date = StringField('Дата начала', validators=[DataRequired()])
+    end_date = StringField('Дата окончания', validators=[DataRequired()])
+    is_finished = BooleanField('Закончена')
+    submit = SubmitField('применить')
 
 
 def hash_password(password):
