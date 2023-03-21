@@ -3,8 +3,11 @@ import datetime as dt
 import flask
 from flask import Flask, url_for, request, render_template, redirect, \
     make_response, session
+from flask_restful import reqparse, abort, Api, Resource
 from flask_login import LoginManager, login_user, current_user, login_required, \
     logout_user
+
+import data.users_resource
 from data import db_session, server_api
 from data.users import User
 from data.jobs import Jobs
@@ -18,6 +21,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = dt.timedelta(days=365)
 app.register_blueprint(server_api.blueprint)
+
+api = Api(app)
+api.add_resource(data.users_resource.UsersResource, '/api/v2/users/<int:user_id>')
+api.add_resource(data.users_resource.UserListResource, '/api/v2/users')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -60,11 +67,13 @@ def error_401(_):
 def main():
     url_delete = url_for('static', filename='img/delete.png')
     url_style = url_for('static', filename='css/style_works_log.css')
-    data = [[job.id, job.team_leader, job.job, f'{job.user.surname} {job.user.name}',
+    data = [[job.id, job.team_leader, job.job,
+             f'{job.user.surname} {job.user.name}',
              f'{job.work_size} hours', job.collaborators,
              'Is finished' if job.is_finished else 'Is not finished'] for job in
             session.query(Jobs).all()]
-    return render_template('works_log.html', url_style=url_style, data=data, url_delete=url_delete,
+    return render_template('works_log.html', url_style=url_style, data=data,
+                           url_delete=url_delete,
                            title='Главная страница')
 
 
@@ -96,13 +105,13 @@ def edit_job(job_id):
     form_data = job.to_dict()
     if form_data['end_date'] == None:
         form_data['end_date'] = '-'
-    if form_data['is_finished']:
-        print(form_data['is_finished'])
-    params = {'title': 'редактирование', 'url_style': url_style, 'form': form, 'form_data': form_data}
+    params = {'title': 'редактирование', 'url_style': url_style, 'form': form,
+              'form_data': form_data}
     if form.validate_on_submit():
         user = db_sess.query(User).get(form.team_leader.data)
         if not user:
-            return render_template('edit_job.html', message=f'Пользователь с id {form.team_leader.data} не найден',
+            return render_template('edit_job.html',
+                                   message=f'Пользователь с id {form.team_leader.data} не найден',
                                    **params)
         job.team_leader = form.team_leader.data
         job.job = form.job.data

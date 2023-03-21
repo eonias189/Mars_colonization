@@ -38,7 +38,7 @@ def create_jobs():
     db_sess = db_session.create_session()
     user = db_sess.query(User).get(request.json['team_leader'])
     if not user:
-        return jsonify({'error': 'Team leader not founded'})
+        return jsonify({'error': 'Team leader not found'})
     already_job = db_sess.query(Jobs).get(request.json['id'])
     if already_job:
         return jsonify({'error': 'Id already exists'})
@@ -64,7 +64,7 @@ def delete_point(job_id):
     db_sess = db_session.create_session()
     job = db_sess.query(Jobs).get(job_id)
     if not job:
-        return jsonify({'error': 'Job not founded'})
+        return jsonify({'error': 'Job not found'})
     db_sess.delete(job)
     db_sess.commit()
     return jsonify({'success': 'OK'})
@@ -81,13 +81,13 @@ def edit_job(job_id):
     db_sess = db_session.create_session()
     job = db_sess.query(Jobs).get(job_id)
     if not job:
-        return jsonify({'error': 'Job not founded'})
+        return jsonify({'error': 'Job not found'})
     job_already = db_sess.query(Jobs).get(request.json['id'])
     if job_already and job_already.id != job.id:
         return jsonify({'error': 'Id is already taken'})
     user = db_sess.query(User).get(request.json['team_leader'])
     if not user:
-        return jsonify({'error': 'Team leader not Founded'})
+        return jsonify({'error': 'Team leader not found'})
     job.id, job.team_leader, job.job, job.work_size, job.collaborators, job.start_date, job.is_finished = [
         request.json[key] for key
         in ['id',
