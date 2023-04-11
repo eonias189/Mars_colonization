@@ -16,5 +16,18 @@ class UserParser(reqparse.RequestParser):
         self.add_argument('modified_date', required=True)
 
 
+class JobParser(reqparse.RequestParser):
+    def __init__(self):
+        super().__init__()
+        self.add_argument('id', required=True, type=int)
+        self.add_argument('team_leader', required=True)
+        self.add_argument('job', required=True)
+        self.add_argument('work_size', required=True, type=int)
+        self.add_argument('collaborators', required=True)
+        self.add_argument('start_date', required=True)
+        self.add_argument('end_date', required=True)
+        self.add_argument('is_finished', required=True)
+
+
 if __name__ == '__main__':
     parser = UserParser()

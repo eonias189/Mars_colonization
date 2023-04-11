@@ -8,6 +8,7 @@ from flask_login import LoginManager, login_user, current_user, login_required, 
     logout_user
 
 import data.users_resource
+import data.jobs_resource
 from data import db_session, server_api
 from data.users import User
 from data.jobs import Jobs
@@ -23,8 +24,11 @@ app.config['PERMANENT_SESSION_LIFETIME'] = dt.timedelta(days=365)
 app.register_blueprint(server_api.blueprint)
 
 api = Api(app)
-api.add_resource(data.users_resource.UsersResource, '/api/v2/users/<int:user_id>')
+api.add_resource(data.users_resource.UsersResource,
+                 '/api/v2/users/<int:user_id>')
 api.add_resource(data.users_resource.UserListResource, '/api/v2/users')
+api.add_resource(data.jobs_resource.JobsResource, '/api/v2/jobs/<int:job_id>')
+api.add_resource(data.jobs_resource.JobsListResource, '/api/v2/jobs')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
